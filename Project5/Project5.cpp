@@ -1,42 +1,44 @@
 #include <iostream>
-#include <iomanip>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
 int main()
 {
-    int startOrganisms;
-    double avgdailyIncrease;
-    int days;
-    //Calulate starting number of organisms
-    cout << "What is the starting number of organisms? ";
-    cin >> startOrganisms;
-    while (startOrganisms < 2) {
-        cout << "\nInvalid input, must be above 2.\nPlease try again: ";
-        cin >> startOrganisms;
-    }
-    //Calulate the percentage increase each day
-    cout << endl << "What is the average daily population increase as a percentage (Ex. = 5 for 5%)? ";
-    cin >> avgdailyIncrease;
-    while (avgdailyIncrease < 0) {
-        cout << "\nInvalid input, must be a positive number.\nPlease try again: ";
-        cin >> avgdailyIncrease;
-    }
-    //Calulate the amount of days they will multiply
-    cout << endl << "What is the amount of days these organisms will multiply? ";
-    cin >> days;
-    while (days < 1) {
-        cout << "\nInvalid input, must be a number greater than 1.\nPlease try again: ";
-        cin >> days;
-    }
-    //Turns user input into a percentage
-    double rateofgrowth = avgdailyIncrease / 100;
-    //Output a chart of each day that displays the Day and Organisms as they increase
-    cout << fixed << setprecision(2);
-    cout << "Day" << "   " << "Organisms" << endl;
-    for (int day = 1; day <= days; day++) {
-        cout << day << "     " << startOrganisms << endl;
-        double increase = startOrganisms * rateofgrowth;
-        startOrganisms = startOrganisms + increase;
-    }
+	ifstream inputFile("LineUp.txt");
+	//safety net if file could not be found or opened
+	if (!inputFile) {
+		cout << "Could not open LineUp.txt" << endl;
+		return 0;
+	}
+	//input variables
+	string name;
+	string firstInLine;
+	string lastInLine;
+	int studentCount = 0;
+
+	while (inputFile >> name) {
+		studentCount++;
+		//Read names and start figuring out first and last
+		if (studentCount == 1) {
+			firstInLine = name;
+			lastInLine = name;
+		}
+		//Compares the names alphabetically
+		if (name < firstInLine) {
+			firstInLine = name;
+		}
+		if (name > lastInLine) {
+			lastInLine = name;
+		}
+	}
+
+	inputFile.close();
+	//Output to user
+	cout << "Number of students: " << studentCount << endl;
+	cout << "First in line: " << firstInLine << endl;
+	cout << "Last in line: " << lastInLine << endl;
+
+	return 0;
 }
