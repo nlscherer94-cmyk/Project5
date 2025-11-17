@@ -8,26 +8,27 @@ int main()
 {
 	string fileName;
 	string townName;
-
+	//Ask input of user to input data file
 	cout << "Enter the name of the data file: ";
 	cin >> fileName;
 
 	ifstream inputFile;
 	inputFile.open(fileName);
-
-	if (!inputFile) {
-		cout << "\n\nFile not found\n\n";
-		return 0;
+	//Safety loop to allow user error in their input and a chance to try again
+	while (!inputFile) {
+		cout << "\nFile not found.\n\nPlease enter the name of the data file: ";
+		cin >> fileName;
+		inputFile.open(fileName);
 	}
-
+	//Let user know their file opened successfully and to press enter
+	cout << "\nFile was loaded successfully. Press Enter to proceed.";
+	cin.ignore();
+	cin.get();
+	cout << endl;
+	//User input name of town
 	cout << "Enter the name of the town: ";
 	cin >> townName;
 
-	cout << endl;
-
-	cout << "File was loaded successfully. Press Enter to proceed.";
-	cin.ignore();
-	cin.get();
 	cout << endl;
 
 	cout << townName << " Population Growth" << endl;
