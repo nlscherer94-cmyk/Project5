@@ -54,5 +54,4 @@ int main()
 	inputFile.close();
 
 	return 0;
-
 }
